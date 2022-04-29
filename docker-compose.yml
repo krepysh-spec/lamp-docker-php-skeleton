@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: "${DOCKER_PREFIX}-nginx"
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./src:/var/www/backend
+      - ./logs/nginx/:/var/log/nginx/
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:latest
+    container_name: "${DOCKER_PREFIX}-redis"
+    expose:
+      - "6379"
+    networks:
+      - backend-network
+
+  mysql:
+    image: mysql:latest
+    container_name: "${DOCKER_PREFIX}-mysql"
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./logs/mysql/:/var/log/mysql
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
+    networks:
+      - backend-network
+
+  backend:
+    container_name: "${DOCKER_PREFIX}-backend"
+    build: docker/backend
+    env_file:
+      - .env
+    volumes:
+      - ./src:/var/www/backend
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

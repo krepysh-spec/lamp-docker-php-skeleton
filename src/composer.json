@@ -1,0 +1,9 @@
+{
+    "name": "krepysh-spec/lamp-docker-php-skeleton",
+    "autoload": {
+        "psr-4": {
+            "KrepyshSpec\\LampDockerPhpSkeleton\\": "src/"
+        }
+    },
+    "require": {}
+}
