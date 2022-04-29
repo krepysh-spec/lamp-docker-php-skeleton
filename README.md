@@ -8,7 +8,7 @@ To install, you need to install docker locally.
 - Simple and clear project structure;
 - Php the latest version 8.1 (can be changed if you need);
 - All necessary php extensions including composer and xDebug3;
-- Output all necessary logs (nginx, php, mysql, redis), including slow mysql queries;
+- Output all necessary logs (nginx, php, mysql, redis, supervisor, cron), including slow mysql queries;
 - Supervisor and cron support
 - Quick, easy setup for everything you need
 - Lots of useful examples
@@ -16,14 +16,20 @@ To install, you need to install docker locally.
 ### How start work
 First make sure you have [Docker](https://docs.docker.com/get-docker/) installed locally.
 
-1. Clone current project:
+Clone current project:
+```bash
+git clone https://github.com/krepysh-spec/lamp-docker-php-skeleton.git && cd lamp-docker-php-skeleton
+````
+Create .env file from .env_example:
+```bash
+cp .env_example .env
+````
+Fill configuration in .env file
+```bash
+docker-compose build && docker-compose up
+```
 
-   `git clone https://github.com/krepysh-spec/lamp-docker-php-skeleton.git && cd lamp-docker-php-skeleton`
-2. Create .env file from .env_example:
-
-   `cp .env_example .env` and fill configuration in .env file
-
-3. `docker-compose build && docker-compose up` and after open in browser [http://localhost](http://localhost)
+After open in browser [http://localhost](http://localhost)
 
 ### Support
 

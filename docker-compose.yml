@@ -22,6 +22,17 @@ services:
     networks:
       - backend-network
 
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: "${DOCKER_PREFIX}-redis-commander"
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis
+    ports:
+      - "8081:8081"
+    networks:
+      - backend-network
+
   mysql:
     image: mysql:latest
     container_name: "${DOCKER_PREFIX}-mysql"
