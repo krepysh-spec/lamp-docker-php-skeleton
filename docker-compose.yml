@@ -48,6 +48,9 @@ services:
       - .env
     volumes:
       - ./src:/var/www/backend
+      - ./logs/supervisor/:/var/log/supervisor/
+    ports:
+      - "9001:9001" # Access GUI with http://localhost:9001/
     networks:
       - backend-network
 
