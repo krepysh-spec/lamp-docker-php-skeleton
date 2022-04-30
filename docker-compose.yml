@@ -60,6 +60,7 @@ services:
     volumes:
       - ./src:/var/www/backend
       - ./logs/supervisor/:/var/log/supervisor/
+      - ./logs/cron/:/var/log/cron/
     ports:
       - "9001:9001" # Access GUI with http://localhost:9001/
     networks:

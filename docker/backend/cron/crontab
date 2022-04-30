@@ -1,0 +1,11 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+#     ,------ MINUTE
+#    / ,----- HOUR
+#   / / ,---- DAY OF MONTH
+#  / / / ,--- MONTH
+# / / / / ,-- DAY OF WEEK
+#/ / / / /
+* * * * * /usr/local/bin/php /var/www/backend/src/bin/cron.php >> /var/log/cron/cron.log 2>&1
+# Don't remove the empty line at the end of this file. It is required to run the cron job

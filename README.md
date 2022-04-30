@@ -13,8 +13,20 @@ To install, you need to install docker locally.
 - Quick, easy setup for everything you need
 - Lots of useful examples
 
+### What's inside
+
+* [Nginx](http://nginx.org/)
+* [MySQL](http://www.mysql.com/)
+* [PHP-FPM](http://php-fpm.org/)
+* [Redis](http://redis.io/)
+
+### Requirements
+
+* [Docker Engine](https://docs.docker.com/installation/)
+* [Docker Compose](https://docs.docker.com/compose/)
+* [Docker Machine](https://docs.docker.com/machine/) (Mac and Windows only)
+
 ### How start work
-First make sure you have [Docker](https://docs.docker.com/get-docker/) installed locally.
 
 Clone current project:
 ```bash
@@ -29,7 +41,7 @@ Fill configuration in .env file
 docker-compose build && docker-compose up
 ```
 
-After open in browser [http://localhost](http://localhost)
+After open in browser [http://127.0.0.1/](http://127.0.0.1/)
 
 ### Support
 
