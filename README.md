@@ -38,6 +38,15 @@ Create .env file from .env_example:
 cp .env_example .env
 ````
 Fill configuration in .env file
+
+To run the docker commands without using **sudo** you must add the **docker** group to **your-user**:
+
+```bash
+sudo usermod -aG docker your-user
+```
+
+For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows.
+
 ```bash
 docker-compose build && docker-compose up
 ```
@@ -58,7 +67,7 @@ Commands:
   watch-log logFilePath=[PATH TO LOG FILE] Watch log file
 ```
 
-### Visual project structure
+### Project tree
 
 ```
 .
