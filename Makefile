@@ -1,22 +1,16 @@
 include .env
 
+# make help
 help:
 	@echo ""
 	@echo "usage: make COMMAND"
 	@echo ""
 	@echo "Commands:"
-	@echo "  apidoc              Generate documentation of API"
-	@echo "  code-sniff          Check the API with PHP Code Sniffer (PSR2)"
-	@echo "  clean               Clean directories for reset"
-	@echo "  composer-up         Update PHP dependencies with composer"
-	@echo "  docker-start        Create and start containers"
-	@echo "  docker-stop         Stop and clear all services"
-	@echo "  gen-certs           Generate SSL certificates"
-	@echo "  logs                Follow log output"
-	@echo "  mysql-dump          Create backup of all databases"
-	@echo "  mysql-restore       Restore backup of all databases"
-	@echo "  phpmd               Analyse the API with PHP Mess Detector"
-	@echo "  test                Test application"
+	@echo "  init                                     Init skeleton settings"
+	@echo "  help                                     List of all commands in make file"
+	@echo "  clear-all-logs                           Clear all logs in folder /logs"
+	@echo "  clear-logs-in folder=[FOLDER]            Clear logs in folder"
+	@echo "  watch-log logFilePath=[PATH TO LOG FILE] Watch log file"
 
 # make init
 init:

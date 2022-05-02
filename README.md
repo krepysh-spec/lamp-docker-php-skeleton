@@ -19,6 +19,7 @@ To install, you need to install docker locally.
 * [MySQL](http://www.mysql.com/)
 * [PHP-FPM](http://php-fpm.org/)
 * [Redis](http://redis.io/)
+* [Redis commander](https://joeferner.github.io/redis-commander/)
 
 ### Requirements
 
@@ -41,7 +42,22 @@ Fill configuration in .env file
 docker-compose build && docker-compose up
 ```
 
-After open in browser [http://127.0.0.1/](http://127.0.0.1/)
+After open in browser [localhost](http://127.0.0.1/)
+
+### Makefile
+This file helps to quickly interact with the work of docker and additional features.
+
+```
+usage: make COMMAND
+
+Commands:
+  init                                     Init skeleton settings
+  help                                     List of all commands in make file
+  clear-all-logs                           Clear all logs in folder /logs
+  clear-logs-in folder=[FOLDER]            Clear logs in folder
+  watch-log logFilePath=[PATH TO LOG FILE] Watch log file
+```
+
 
 ### Support
 
