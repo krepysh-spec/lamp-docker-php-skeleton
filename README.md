@@ -58,6 +58,32 @@ Commands:
   watch-log logFilePath=[PATH TO LOG FILE] Watch log file
 ```
 
+### Visual project structure
+
+```
+.
+├── docker - [Docker settings]
+│   ├── backend
+│   │   ├── Dockerfile
+│   │   ├── cron
+│   │   │   └── crontab
+│   │   ├── php
+│   │   │   └── conf.d
+│   │   │       ├── php.ini
+│   │   │       └── xdebug.ini
+│   │   └── supervisor
+│   │       ├── conf.d
+│   │       │   └── example.conf
+│   │       └── supervisord.conf
+│   ├── mysql
+│   │   └── conf.d
+│   │       └── my.cnf
+│   └── nginx
+│       └── nginx.conf
+├── docker-compose.yml
+├── logs - [All necessary logs are written here]
+└── src - [Your workspace]
+```
 
 ### Support
 
