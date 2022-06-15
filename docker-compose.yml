@@ -3,38 +3,44 @@ version: "3.7"
 services:
 
   nginx:
-    image: nginx:latest
+    image: "nginx:${NGINX_VERSION}"
     container_name: "${DOCKER_PREFIX}-nginx"
+    restart: always
     ports:
-      - "80:80"
+      - "${NGINX_PORT}:80"
     volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./src:/var/www/backend
+      - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default.template.conf:/etc/nginx/default.template
+      - "./src:${DOCKER_WORK_DIR}"
       - ./logs/nginx/:/var/log/nginx/
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
       - backend-network
 
   redis:
-    image: redis:latest
+    image: "redis:${REDIS_VERSION}"
+    restart: always
     container_name: "${DOCKER_PREFIX}-redis"
-    expose:
-      - "6379"
+    ports:
+      - "${REDIS_PORT}:6379"
     networks:
       - backend-network
 
   redis-commander:
-    image: rediscommander/redis-commander:latest
+    image: "rediscommander/redis-commander:${REDIS_COMMANDER_VERSION}"
     container_name: "${DOCKER_PREFIX}-redis-commander"
     restart: always
     environment:
       - REDIS_HOSTS=local:redis
     ports:
-      - "8081:8081"
+      - "${REDIS_COMMANDER_PORT}:8081"
     networks:
       - backend-network
 
   mysql:
-    image: mysql:latest
+    image: "mysql:${MYSQL_VERSION}"
     container_name: "${DOCKER_PREFIX}-mysql"
     restart: always
     env_file:
@@ -45,22 +51,31 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
+      - ./docker/mysql/data:/var/lib/mysql
       - ./logs/mysql/:/var/log/mysql
       - ./docker/mysql/conf.d:/etc/mysql/conf.d
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     networks:
       - backend-network
 
   backend:
     container_name: "${DOCKER_PREFIX}-backend"
-    build: docker/backend
+    build:
+      context: ./docker/backend
+      dockerfile: Dockerfile
+      args:
+        - WORK_DIR=${DOCKER_WORK_DIR}
+        - XDEBUG_MODE=${XDEBUG_MODE}
+        - XDEBUG_CLIENT_HOST=${XDEBUG_CLIENT_HOST}
+        - XDEBUG_IDKEY=${XDEBUG_IDKEY}
+        - XDEBUG_CLIENT_PORT=${XDEBUG_CLIENT_PORT}
+    restart: always
     env_file:
       - .env
     volumes:
-      - ./src:/var/www/backend
+      - "./src:${DOCKER_WORK_DIR}"
       - ./logs/supervisor/:/var/log/supervisor/
-      - ./logs/cron/:/var/log/cron/
     ports:
       - "9001:9001" # Access GUI with http://localhost:9001/
     networks:

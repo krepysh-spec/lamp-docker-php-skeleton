@@ -1,4 +1,12 @@
-include .env
+#!make
+-include .env
+
+# set default command name
+default: help
+
+# set variables
+DOCKER := docker
+DOCKER_COMPOSE := docker-compose
 
 # make help
 help:
@@ -14,7 +22,38 @@ help:
 
 # make init
 init:
-	cp .env_example .env;
+	@if [ ! -f ./.env ]; then \
+		cp .env_example .env; \
+	fi
+
+# add nginx host to /etc/hosts file
+add-host:
+	SERVICES=$$(command -v getent > /dev/null && echo "getent ahostsv4" || echo "dscacheutil -q host -a name"); \
+	if [ ! "$$($$SERVICES $(NGINX_HOST) | grep 127.0.0.1 > /dev/null; echo $$?)" -eq 0 ]; then sudo bash -c 'echo "127.0.0.1 $(NGINX_HOST)" >> /etc/hosts; echo "Entry was added"'; else echo 'Entry already exists'; fi;
+
+# exec docker backend container
+bash:
+	@${DOCKER} exec -it "${DOCKER_PREFIX}-backend" bash;
+
+# build docker-compose
+build:
+	@${DOCKER_COMPOSE} build;
+
+# build docker-compose without cache
+build-no-cache:
+	@${DOCKER_COMPOSE} build --no-cache;
+
+# up with demon docker containers
+up:
+	@${DOCKER_COMPOSE} up -d;
+
+# down docker containers
+down:
+	@${DOCKER_COMPOSE} up --volumes --rmi local --remove-orphans;
+
+# stop docker containers
+stop:
+	@${DOCKER_COMPOSE} stop;
 
 # make clear-all-logs
 clear-all-logs:

@@ -1,5 +1,8 @@
 .env
 
+# Ignore mysql data
+/docker/mysql/data/**
+
 # Editor directories and files
 .idea
 *.suo

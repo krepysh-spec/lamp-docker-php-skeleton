@@ -1,5 +1,17 @@
 FROM php:8.1-fpm
 
+ARG WORK_DIR
+ARG XDEBUG_MODE
+ARG XDEBUG_CLIENT_HOST
+ARG XDEBUG_IDKEY
+ARG XDEBUG_CLIENT_PORT
+
+ENV WORK_DIR=$WORK_DIR
+ENV XDEBUG_MODE=$XDEBUG_MODE
+ENV XDEBUG_CLIENT_HOST=$XDEBUG_CLIENT_HOST
+ENV XDEBUG_IDKEY=$XDEBUG_IDKEY
+ENV XDEBUG_CLIENT_PORT=$XDEBUG_CLIENT_PORT
+
 # Set timezone
 RUN echo "UTC" > /etc/timezone
 
@@ -10,7 +22,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     supervisor \
-    cron \
     procps \
     htop
 
@@ -23,11 +34,10 @@ COPY php/conf.d/xdebug.ini $PHP_INI_DIR/conf.d/
 COPY supervisor/supervisord.conf /etc/supervisor
 COPY supervisor/conf.d/* /etc/supervisor/conf.d
 
-COPY cron/crontab /etc/cron.d/crontab
-RUN chmod 0644 /etc/cron.d/crontab
-RUN crontab /etc/cron.d/crontab
-
-RUN mkdir -p /var/log/cron
+# Set configuration for xdebug
+RUN sed -i -e 's/xdebug.client_host=host.docker.internal/xdebug.client_host='"${XDEBUG_CLIENT_HOST}"'/g' $PHP_INI_DIR/conf.d/xdebug.ini
+RUN sed -i -e 's/xdebug.client_port=9003/xdebug.client_port='"${XDEBUG_CLIENT_PORT}"'/g' $PHP_INI_DIR/conf.d/xdebug.ini
+RUN sed -i -e 's/xdebug.idekey=docker/xdebug.idekey='"${XDEBUG_IDKEY}"'/g' $PHP_INI_DIR/conf.d/xdebug.ini
 
 # Install and enable pecl php extentions
 RUN pecl install xdebug redis
@@ -39,6 +49,6 @@ RUN docker-php-ext-install pdo_mysql
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR "/var/www/backend"
+WORKDIR "${WORK_DIR}"
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
