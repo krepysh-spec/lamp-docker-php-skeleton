@@ -27,17 +27,7 @@ To install, you need to install docker locally.
 * [Docker Compose](https://docs.docker.com/compose/)
 * [Docker Machine](https://docs.docker.com/machine/) (Mac and Windows only)
 
-### How start work
-
-Clone current project:
-```bash
-git clone https://github.com/krepysh-spec/lamp-docker-php-skeleton.git && cd lamp-docker-php-skeleton
-````
-Create .env file from .env_example:
-```bash
-cp .env_example .env
-````
-Fill configuration in .env file
+### Before start work
 
 To run the docker commands without using **sudo** you must add the **docker** group to **your-user**:
 
@@ -47,11 +37,33 @@ sudo usermod -aG docker your-user
 
 For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows.
 
+### How start work
+
+Clone current project:
 ```bash
-docker-compose build && docker-compose up
+git clone https://github.com/krepysh-spec/lamp-docker-php-skeleton.git && cd lamp-docker-php-skeleton
+````
+
+Create .env file from .env_example:
+```bash
+cp .env_example .env
+````
+or
+```bash
+make init
+````
+
+Fill configuration in .env file
+
+Run bottom command for install application
+```bash
+make install
 ```
 
-After open in browser [localhost](http://127.0.0.1/)
+If you not change ***NGINX_HOST*** and ***NGINX_PORT*** in ***.env*** open in browser [localhost](http://127.0.0.1/)
+
+And you should see something like:
+![Alt Text](docs/media/result.png)
 
 ### Makefile
 This file helps to quickly interact with the work of docker and additional features.
@@ -62,6 +74,14 @@ usage: make COMMAND
 Commands:
   init                                     Init skeleton settings
   help                                     List of all commands in make file
+  install                                  Install application
+  add-host                                 Add nginx host to /etc/hosts file
+  bash                                     Exec backend container
+  build                                    Build docker-compose
+  build-no-cache                           Build docker-compose without cache
+  up                                       Up with demon docker containers
+  down                                     Down docker containers
+  stop                                     Stop docker containers
   clear-all-logs                           Clear all logs in folder /logs
   clear-logs-in folder=[FOLDER]            Clear logs in folder
   watch-log logFilePath=[PATH TO LOG FILE] Watch log file
@@ -74,8 +94,6 @@ Commands:
 ├── docker - [Docker settings]
 │   ├── backend
 │   │   ├── Dockerfile
-│   │   ├── cron
-│   │   │   └── crontab
 │   │   ├── php
 │   │   │   └── conf.d
 │   │   │       ├── php.ini
@@ -93,6 +111,14 @@ Commands:
 ├── logs - [All necessary logs are written here]
 └── src - [Your workspace]
 ```
+
+### More documentation
+You can also read more information about the project
+
+| Doc                        | README                                     |
+|----------------------------|--------------------------------------------|
+| xDebug configuration       | [docs/xdebug.md](docs/xdebug.md)           |
+| Code sniffer configuration | [docs/codesniffer.md](docs/codesniffer.md) |
 
 ### Support
 

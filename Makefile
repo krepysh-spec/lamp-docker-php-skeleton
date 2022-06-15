@@ -16,6 +16,14 @@ help:
 	@echo "Commands:"
 	@echo "  init                                     Init skeleton settings"
 	@echo "  help                                     List of all commands in make file"
+	@echo "  install                                  Install application"
+	@echo "  add-host                                 Add nginx host to /etc/hosts file"
+	@echo "  bash                                     Exec backend container"
+	@echo "  build                                    Build docker-compose"
+	@echo "  build-no-cache                           Build docker-compose without cache"
+	@echo "  up                                       Up with demon docker containers"
+	@echo "  down                                     Down docker containers"
+	@echo "  stop                                     Stop docker containers"
 	@echo "  clear-all-logs                           Clear all logs in folder /logs"
 	@echo "  clear-logs-in folder=[FOLDER]            Clear logs in folder"
 	@echo "  watch-log logFilePath=[PATH TO LOG FILE] Watch log file"
@@ -25,6 +33,10 @@ init:
 	@if [ ! -f ./.env ]; then \
 		cp .env_example .env; \
 	fi
+
+# make install project
+install: add-host build up
+	@${DOCKER} exec -it "${DOCKER_PREFIX}-backend" composer install;
 
 # add nginx host to /etc/hosts file
 add-host:
