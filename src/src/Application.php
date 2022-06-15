@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KrepyshSpec\LampDockerPhpSkeleton;
 
 use PDO;
@@ -26,10 +28,10 @@ class Application
     private function checkConnectMysql(): bool
     {
         $servername = "mysql";
-        $username = "root";
-        $password = "root";
-        $dbname = "testwork";
-        $port = "3306";
+        $username   = $_ENV['MYSQL_USER'];
+        $password   = $_ENV['MYSQL_PASSWORD'];
+        $dbname     = $_ENV['MYSQL_DATABASE'];
+        $port       = $_ENV['MYSQL_PORT'];
 
         try{
 
