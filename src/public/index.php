@@ -3,5 +3,9 @@
 use KrepyshSpec\LampDockerPhpSkeleton\Application;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../currency/vendor/autoload.php';
 
-(new Application())->start();
+
+echo \KrepyshSpec\World\Currency::USD;
+
+//(new Application())->start();
