@@ -35,7 +35,7 @@ services:
     environment:
       - REDIS_HOSTS=local:redis
     ports:
-      - "${REDIS_COMMANDER_PORT}:8081"
+      - "${REDIS_COMMANDER_PORT}:8081" # UI with http://localhost:8081/
     networks:
       - backend-network
 
@@ -59,23 +59,17 @@ services:
     networks:
       - backend-network
 
-  backend:
+  php:
     container_name: "${DOCKER_PREFIX}-backend"
     build:
-      context: ./docker/backend
+      context: ./docker/php
       dockerfile: Dockerfile
-      args:
-        - WORK_DIR=${DOCKER_WORK_DIR}
-        - XDEBUG_MODE=${XDEBUG_MODE}
-        - XDEBUG_CLIENT_HOST=${XDEBUG_CLIENT_HOST}
-        - XDEBUG_IDKEY=${XDEBUG_IDKEY}
-        - XDEBUG_CLIENT_PORT=${XDEBUG_CLIENT_PORT}
     restart: always
     env_file:
       - .env
     volumes:
       - "./src:${DOCKER_WORK_DIR}"
-      - ./logs/supervisor/:/var/log/supervisor/
+      - "./docker/php/conf.d/php.ini:/usr/local/etc/php/php.ini:ro"
     networks:
       - backend-network
 
@@ -91,7 +85,7 @@ services:
     networks:
       - backend-network
     ports:
-      - "9001:9001" # Access GUI with http://localhost:9001/
+      - "9001:9001" # UI with http://localhost:9001/
 
 networks:
   backend-network:
