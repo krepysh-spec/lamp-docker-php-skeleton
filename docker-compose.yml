@@ -69,7 +69,8 @@ services:
       - .env
     volumes:
       - "./src:${DOCKER_WORK_DIR}"
-      - "./docker/php/conf.d/php.ini:/usr/local/etc/php/php.ini:ro"
+      - ./logs/php/:/var/log/php
+      - ./docker/php/conf.d/php.ini:/usr/local/etc/php/php.ini:ro
     networks:
       - backend-network
 
