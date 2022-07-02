@@ -35,12 +35,12 @@ init:
 	fi
 
 	@if [ -f ./LICENSE ]; then \
-    	rm ./LICENSE \
-    fi
+		rm ./LICENSE; \
+	fi
 
-#    @if [ -f ./.git ]; then \
-#            rm -rf ./.git; \
-#        fi
+	@if [ -f ./.git ]; then \
+		rm -rf ./.git; \
+	fi
 
 # make install project
 install: add-host build up
