@@ -40,9 +40,9 @@ For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps 
 
 ### MacOS/Linux
 ```bash
-curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeletonmain/install.sh | bash
+curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeleton/main/install.sh | bash
 # Or if you want it to be installed to a different path:
-curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeletonmain/install.sh | bash -s mypath/
+curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeleton/main/install.sh | bash -s mypath/
 ```
 
 ### Manually
@@ -60,6 +60,8 @@ or
 ```bash
 make init
 ````
+
+### How start work
 
 Fill configuration in .env file
 
