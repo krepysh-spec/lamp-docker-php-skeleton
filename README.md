@@ -8,8 +8,8 @@ To install, you need to install docker locally.
 - Simple and clear project structure;
 - Php the latest version 8.1 (can be changed if you need);
 - All necessary php extensions including composer and xDebug3;
-- Output all necessary logs (nginx, php, mysql, redis, supervisor, cron), including slow mysql queries;
-- Supervisor and cron support
+- Output all necessary logs (nginx, php, mysql, redis, supervisor), including slow mysql queries;
+- Supervisor support
 - Quick, easy setup for everything you need
 - Lots of useful examples
 
@@ -20,6 +20,7 @@ To install, you need to install docker locally.
 * [PHP-FPM](http://php-fpm.org/)
 * [Redis](http://redis.io/)
 * [Redis commander](https://joeferner.github.io/redis-commander/)
+* [Supervisord](http://supervisord.org/)
 
 ### Requirements
 
@@ -67,10 +68,9 @@ And you should see something like:
 
 ### Makefile
 This file helps to quickly interact with the work of docker and additional features.
+Read about available commands `make help`
 
 ```
-usage: make COMMAND
-
 Commands:
   init                                     Init skeleton settings
   help                                     List of all commands in make file
@@ -111,6 +111,11 @@ Commands:
 ├── logs - [All necessary logs are written here]
 └── src - [Your workspace]
 ```
+
+### Project links (Default: http://127.0.0.1/)
+- [Homepage](http://127.0.0.1/)
+- [Rediscommander](http://127.0.0.1:8081)
+- [Supervisor GUI](http://127.0.0.1:9001)
 
 ### More documentation
 You can also read more information about the project

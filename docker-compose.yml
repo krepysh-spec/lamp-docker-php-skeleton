@@ -76,10 +76,22 @@ services:
     volumes:
       - "./src:${DOCKER_WORK_DIR}"
       - ./logs/supervisor/:/var/log/supervisor/
-    ports:
-      - "9001:9001" # Access GUI with http://localhost:9001/
     networks:
       - backend-network
+
+  supervisord:
+    container_name: "${DOCKER_PREFIX}-supervisord"
+    build:
+      context: ./docker/supervisord
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./logs/supervisor/:/var/log/supervisor/
+      - "./src:${DOCKER_WORK_DIR}"
+    networks:
+      - backend-network
+    ports:
+      - "9001:9001" # Access GUI with http://localhost:9001/
 
 networks:
   backend-network:
