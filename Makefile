@@ -42,6 +42,10 @@ init:
 		rm -rf ./.git; \
 	fi
 
+	@if [ -f ./install.sh ]; then \
+		rm ./install.sh; \
+	fi
+
 # make install project
 install: add-host build up
 	@${DOCKER} exec -it "${DOCKER_PREFIX}-backend" composer install;
