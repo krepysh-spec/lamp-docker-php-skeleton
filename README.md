@@ -38,7 +38,14 @@ sudo usermod -aG docker your-user
 
 For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows.
 
-### How start work
+### MacOS/Linux
+```bash
+curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeletonmain/install.sh | bash
+# Or if you want it to be installed to a different path:
+curl -L https://raw.githubusercontent.com/krepysh-spec/lamp-docker-php-skeletonmain/install.sh | bash -s mypath/
+```
+
+### Manually
 
 Clone current project:
 ```bash
