@@ -51,7 +51,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
       - ./logs/mysql/:/var/log/mysql
       - ./docker/mysql/conf.d:/etc/mysql/conf.d
     ports:
@@ -84,3 +84,7 @@ services:
 networks:
   backend-network:
     driver: bridge
+
+volumes:
+  dbdata:
+    driver: local

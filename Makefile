@@ -34,6 +34,14 @@ init:
 		cp .env_example .env; \
 	fi
 
+	@if [ -f ./LICENSE ]; then \
+    	rm ./LICENSE \
+    fi
+
+#    @if [ -f ./.git ]; then \
+#            rm -rf ./.git; \
+#        fi
+
 # make install project
 install: add-host build up
 	@${DOCKER} exec -it "${DOCKER_PREFIX}-backend" composer install;
